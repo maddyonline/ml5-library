@@ -32,6 +32,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 function drawCameraIntoCanvas() {
   // Draw the video element into the canvas
   ctx.drawImage(video, 0, 0, 640, 480);
+  drawKeypoints();
   window.requestAnimationFrame(drawCameraIntoCanvas);
 }
 // Loop over the drawCameraIntoCanvas function
@@ -53,4 +54,25 @@ function modelReady() {
   poseDetector.multiPose(video);
 }
 
-
+function drawKeypoints() {
+  // Loop through all the poses detected
+  for (let i = 0; i < poses.length; i += 1) {
+    // For each pose detected, loop through all the keypoints
+    const pose = poses[i];
+    console.log({ keypoints: pose.keypoints });
+    try {
+      for (let j = 0; j < pose.keypoints.length; j += 1) {
+        // A keypoint is an object describing a body part (like rightArm or leftShoulder)
+        const keypoint = pose.keypoints[j];
+        // Only draw an ellipse is the pose probability is bigger than 0.2
+        if (keypoint.score > 0.2) {
+          ctx.beginPath();
+          ctx.arc(keypoint.x, keypoint.y, 10, 0, 2 * Math.PI);
+          ctx.stroke();
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
