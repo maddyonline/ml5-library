@@ -15,6 +15,7 @@ import {YOLO} from "./ObjectDetector/YOLO";
 import {CocoSsd} from "./ObjectDetector/CocoSsd";
 import objectDetector from "./ObjectDetector";
 import poseNet from "./PoseNet";
+import poseDetector from "./PoseDetector"
 import * as imageUtils from "./utils/imageUtilities";
 import styleTransfer from "./StyleTransfer/";
 import charRNN from "./CharRNN/";
@@ -52,6 +53,7 @@ const withPreload = {
   pitchDetection,
   pix2pix,
   poseNet,
+  poseDetector,
   sketchRNN,
   styleTransfer,
   word2vec,
@@ -82,3 +84,5 @@ export default Object.assign({ p5Utils }, preloadRegister(withPreload), {
   neuralNetwork,
   testingUtils
 });
+
+console.log("hello hi")
